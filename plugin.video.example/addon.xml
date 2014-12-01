@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.example"
+version="0.0.1"
+name="Example Kodi Video Plugin"
+provider-name="Roman_V_M">
+<requires>
+  <import addon="xbmc.python" version="2.14.0"/>
+</requires>
+<extension point="xbmc.python.pluginsource" library="default.py">
+  <provides>video</provides>
+</extension>
+<extension point="xbmc.addon.metadata">
+  <summary lang="en">Example Kodi Video Plugin</summary>
+  <description lang="en">An example video plugin for Kodi mediacenter.</description>
+</extension>
+</addon>
