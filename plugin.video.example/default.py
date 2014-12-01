@@ -132,7 +132,6 @@ def play_video(path):
     """
     Play a video by the provided path.
     :param path: str
-    :param label: str
     :return: None
     """
     # Create a playable item with a path to play.
