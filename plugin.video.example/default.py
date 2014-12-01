@@ -91,6 +91,7 @@ def list_categories():
         # Here we use the same image as the thumbnail for simplicity's sake.
         list_item.setProperty('fanart_image', VIDEOS[category][0][1])
         # Create a URL for the plugin recursive callback.
+        # Example: plugin://plugin.video.example/?category=Animals
         url = '{0}?category={1}'.format(__url__, category)
         # Add the list item to a virtual Kodi folder.
         # isFolder=True means that this item opens a sub-list of lower level items.
@@ -120,6 +121,7 @@ def list_videos(category):
         # This is mandatory for playable items!
         list_item.setProperty('IsPlayable', 'true')
         # Create a URL for the plugin recursive callback.
+        # Example: plugin://plugin.video.example/?play=http://www.vidsplay.com/vids/crab.mp4
         url = '{0}?play={1}'.format(__url__, video[2])
         # Add the list item to a virtual Kodi folder.
         # isFolder=False means that this item won't open any sub-list.
