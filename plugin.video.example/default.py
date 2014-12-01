@@ -16,6 +16,8 @@ __handle__ = int(sys.argv[1])
 
 # Free sample videos are provided by www.vidsplay.com
 # Here we use a fixed set of properties simply for demonstrating purposes
+# In a "real life" plugin you will need to get info and links to video files/streams
+# from some web-site or online service.
 VIDEOS = {'Animals': [('Crab', 'http://www.vidsplay.com/vids/crab.jpg',
                        'http://www.vidsplay.com/vids/crab.mp4'),
                         ('Alligator', 'http://www.vidsplay.com/vids/alligator.jpg',
