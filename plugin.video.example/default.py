@@ -43,7 +43,7 @@ def get_params():
     Parse parameters string received as sys.argv[2] list item.
     :return: list
     """
-    # Remove ? character from the paramstring.
+    # Remove the starting '?' character from the paramstring.
     paramstring = sys.argv[2].replace('?', '')
     if paramstring:
         # if a paramstring present, parse it to the list of tuples (parameter, value)
