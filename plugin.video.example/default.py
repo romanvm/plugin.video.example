@@ -5,7 +5,7 @@
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
 
 import sys
-import urlparse
+from urlparse import parse_qs
 import xbmcgui
 import xbmcplugin
 
@@ -18,40 +18,36 @@ __handle__ = int(sys.argv[1])
 # Here we use a fixed set of properties simply for demonstrating purposes
 # In a "real life" plugin you will need to get info and links to video files/streams
 # from some web-site or online service.
-VIDEOS = {'Animals': [('Crab', 'http://www.vidsplay.com/vids/crab.jpg',
-                       'http://www.vidsplay.com/vids/crab.mp4'),
-                        ('Alligator', 'http://www.vidsplay.com/vids/alligator.jpg',
-                         'http://www.vidsplay.com/vids/alligator.mp4'),
-                        ('Turtle', 'http://www.vidsplay.com/vids/turtle.jpg',
-                         'http://www.vidsplay.com/vids/turtle.mp4')],
-          'Cars': [('Postal Truck', 'http://www.vidsplay.com/vids/us_postal.jpg',
-                    'http://www.vidsplay.com/vids/us_postal.mp4'),
-                    ('Traffic', 'http://www.vidsplay.com/vids/traffic1.jpg',
-                     'http://www.vidsplay.com/vids/traffic1.avi'),
-                    ('Traffic Arrows', 'http://www.vidsplay.com/vids/traffic_arrows.jpg',
-                     'http://www.vidsplay.com/vids/traffic_arrows.mp4')],
-          'Food': [('Chicken', 'http://www.vidsplay.com/vids/chicken.jpg',
-                    'http://www.vidsplay.com/vids/bbqchicken.mp4'),
-                   ('Hamburger', 'http://www.vidsplay.com/vids/hamburger.jpg',
-                    'http://www.vidsplay.com/vids/hamburger.mp4'),
-                   ('Pizza', 'http://www.vidsplay.com/vids/pizza.jpg',
-                    'http://www.vidsplay.com/vids/pizza.mp4')]}
-
-
-def get_params():
-    """
-    Parse parameters string received as sys.argv[2] list item.
-    :return: list
-    """
-    # Remove the starting '?' character from the paramstring.
-    paramstring = sys.argv[2].replace('?', '')
-    if paramstring:
-        # if a paramstring present, parse it to the list of tuples (parameter, value)
-        params = urlparse.parse_qsl(paramstring)
-    else:
-        # Return an empty stub list if there's no paramstring passed to the plugin.
-        params = [('',)]
-    return params
+VIDEOS = {'Animals': [{'name': 'Crab',
+                       'thumb': 'http://www.vidsplay.com/vids/crab.jpg',
+                       'video': 'http://www.vidsplay.com/vids/crab.mp4'},
+                      {'name': 'Alligator',
+                       'thumb': 'http://www.vidsplay.com/vids/alligator.jpg',
+                       'video': 'http://www.vidsplay.com/vids/alligator.mp4'},
+                      {'name': 'Turtle',
+                       'thumb': 'http://www.vidsplay.com/vids/turtle.jpg',
+                       'video': 'http://www.vidsplay.com/vids/turtle.mp4'}
+                      ],
+            'Cars': [{'name': 'Postal Truck',
+                      'thumb': 'http://www.vidsplay.com/vids/us_postal.jpg',
+                      'video': 'http://www.vidsplay.com/vids/us_postal.mp4'},
+                     {'name': 'Traffic',
+                      'thumb': 'http://www.vidsplay.com/vids/traffic1.jpg',
+                      'video': 'http://www.vidsplay.com/vids/traffic1.avi'},
+                     {'name': 'Traffic Arrows',
+                      'thumb': 'http://www.vidsplay.com/vids/traffic_arrows.jpg',
+                      'video': 'http://www.vidsplay.com/vids/traffic_arrows.mp4'}
+                     ],
+            'Food': [{'name': 'Chicken',
+                      'thumb': 'http://www.vidsplay.com/vids/chicken.jpg',
+                      'video': 'http://www.vidsplay.com/vids/bbqchicken.mp4'},
+                     {'name': 'Hamburger',
+                      'thumb': 'http://www.vidsplay.com/vids/hamburger.jpg',
+                      'video': 'http://www.vidsplay.com/vids/hamburger.mp4'},
+                     {'name': 'Pizza',
+                      'thumb': 'http://www.vidsplay.com/vids/pizza.jpg',
+                      'video': 'http://www.vidsplay.com/vids/pizza.mp4'}
+                     ]}
 
 
 def get_categories():
@@ -86,13 +82,13 @@ def list_categories():
     # Iterate through categories
     for category in categories:
         # Create a list item with a text label and a thumbnail image.
-        list_item = xbmcgui.ListItem(label=category, thumbnailImage=VIDEOS[category][0][1])
+        list_item = xbmcgui.ListItem(label=category, thumbnailImage=VIDEOS[category][0]['thumb'])
         # Set a fanart image for the list item.
         # Here we use the same image as the thumbnail for simplicity's sake.
-        list_item.setProperty('fanart_image', VIDEOS[category][0][1])
+        list_item.setProperty('fanart_image', VIDEOS[category][0]['thumb'])
         # Create a URL for the plugin recursive callback.
-        # Example: plugin://plugin.video.example/?category=Animals
-        url = '{0}?category={1}'.format(__url__, category)
+        # Example: plugin://plugin.video.example/?action=listing&category=Animals
+        url = '{0}?action=listing&category={1}'.format(__url__, category)
         # Add the list item to a virtual Kodi folder.
         # isFolder=True means that this item opens a sub-list of lower level items.
         xbmcplugin.addDirectoryItem(__handle__, url, list_item, isFolder=True)
@@ -109,20 +105,20 @@ def list_videos(category):
     :return: None
     """
     # Get the list of videos in the category.
-    videos = VIDEOS[category]
+    videos = get_videos(category)
     # Iterate through videos.
     for video in videos:
         # Create a list item with a text label and a thumbnail image.
-        list_item = xbmcgui.ListItem(label=video[0], thumbnailImage=video[1])
+        list_item = xbmcgui.ListItem(label=video['name'], thumbnailImage=video['thumb'])
         # Set a fanart image for the list item.
         # Here we use the same image as the thumbnail for simplicity's sake.
-        list_item.setProperty('fanart_image', video[1])
+        list_item.setProperty('fanart_image', video['thumb'])
         # Set 'IsPlayable' property to 'true'.
         # This is mandatory for playable items!
         list_item.setProperty('IsPlayable', 'true')
         # Create a URL for the plugin recursive callback.
-        # Example: plugin://plugin.video.example/?play=http://www.vidsplay.com/vids/crab.mp4
-        url = '{0}?play={1}'.format(__url__, video[2])
+        # Example: plugin://plugin.video.example/?action=play&video=http://www.vidsplay.com/vids/crab.mp4
+        url = '{0}?action=play&video={1}'.format(__url__, video['video'])
         # Add the list item to a virtual Kodi folder.
         # isFolder=False means that this item won't open any sub-list.
         xbmcplugin.addDirectoryItem(__handle__, url, list_item, isFolder=False)
@@ -142,17 +138,31 @@ def play_video(path):
     xbmcplugin.setResolvedUrl(__handle__, True, listitem=play_item)
 
 
-if __name__ == '__main__':
-    # Get parameters
-    params = get_params()
+def router(paramstring):
+    """
+    Router function that calls other functions
+    depending on the provided paramstring
+    :param paramstring:
+    :return:
+    """
+    # Parse a URL-encoded paramstring to the dictionary of
+    # {<parameter>: [<list of values>]} elements
+    params = parse_qs(paramstring)
     # Check the parameters passed to the plugin
-    if params[0][0] == 'category':
-        # Display the list of videos in a given category.
-        list_videos(params[0][1])
-    elif params[0][0] == 'play':
-        # Play a video from a given URL.
-        play_video(params[0][1])
+    if params:
+        if params['action'][0] == 'listing':
+            # Display the list of videos in a provided category.
+            list_videos(params['category'][0])
+        elif params['action'][0] == 'play':
+            # Play a video from a provided URL.
+            play_video(params['video'][0])
     else:
-        # Display the list of video categories
-        # if the plugin is called from Kodi UI without parameters.
+        # If the plugin is called from Kodi UI without any parameters,
+        # display the list of video categories
         list_categories()
+
+
+if __name__ == '__main__':
+    # Call the router function and pass the plugin call parameters to it.
+    # We use string slicing to remove starting "?" from the paramstring
+    router(sys.argv[2][1:])

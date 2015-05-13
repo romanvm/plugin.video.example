@@ -12,5 +12,6 @@ provider-name="Roman_V_M">
 <extension point="xbmc.addon.metadata">
   <summary lang="en">Example Kodi Video Plugin</summary>
   <description lang="en">An example video plugin for Kodi mediacenter.</description>
+  <disclaimer lang="en">Free sample videos are provided by www.vidsplay.com.</disclaimer>
 </extension>
 </addon>
