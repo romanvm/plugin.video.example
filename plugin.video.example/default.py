@@ -5,7 +5,7 @@
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
 
 import sys
-from urlparse import parse_qs
+from urlparse import parse_qsl
 import xbmcgui
 import xbmcplugin
 
@@ -146,16 +146,16 @@ def router(paramstring):
     :return:
     """
     # Parse a URL-encoded paramstring to the dictionary of
-    # {<parameter>: [<list of values>]} elements
-    params = parse_qs(paramstring)
+    # {<parameter>: <value>} elements
+    params = dict(parse_qsl(paramstring[1:]))
     # Check the parameters passed to the plugin
     if params:
-        if params['action'][0] == 'listing':
+        if params['action'] == 'listing':
             # Display the list of videos in a provided category.
-            list_videos(params['category'][0])
-        elif params['action'][0] == 'play':
+            list_videos(params['category'])
+        elif params['action'] == 'play':
             # Play a video from a provided URL.
-            play_video(params['video'][0])
+            play_video(params['video'])
     else:
         # If the plugin is called from Kodi UI without any parameters,
         # display the list of video categories
@@ -164,5 +164,4 @@ def router(paramstring):
 
 if __name__ == '__main__':
     # Call the router function and pass the plugin call parameters to it.
-    # We use string slicing to remove starting "?" from the paramstring
-    router(sys.argv[2][1:])
+    router(sys.argv[2])

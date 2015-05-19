@@ -40,7 +40,7 @@ class RouterTestCase(unittest.TestCase):
         """
         Test router for open a category request
         """
-        default.router('action=listing&category=Animals')
+        default.router('?action=listing&category=Animals')
         mock_list_videos.assert_called_with('Animals')
 
     @mock.patch('default.play_video')
@@ -48,8 +48,8 @@ class RouterTestCase(unittest.TestCase):
         """
         Test router for a play video request
         """
-        default.router('action=play&video=http://test')
-        mock_play_video.assert_called_with('http://test')
+        default.router('?action=play&video=http://test.mkv')
+        mock_play_video.assert_called_with('http://test.mkv')
 
 # list_categories(), list_videos() and play_video() functions include
 # mostly calls to Kody Python API with little or no custom logic.
