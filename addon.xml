@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.example"
-version="0.0.1"
+version="1.0.0"
 name="Example Kodi Video Plugin"
 provider-name="Roman_V_M">
 <requires>
