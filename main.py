@@ -10,9 +10,9 @@ import xbmcgui
 import xbmcplugin
 
 # Get the plugin url in plugin:// notation.
-__url__ = sys.argv[0]
+_url = sys.argv[0]
 # Get the plugin handle as an integer number.
-__handle__ = int(sys.argv[1])
+_handle = int(sys.argv[1])
 
 # Free sample videos are provided by www.vidsplay.com
 # Here we use a fixed set of properties simply for demonstrating purposes
@@ -105,7 +105,7 @@ def list_categories():
         list_item.setInfo('video', {'title': category, 'genre': category})
         # Create a URL for the plugin recursive callback.
         # Example: plugin://plugin.video.example/?action=listing&category=Animals
-        url = '{0}?action=listing&category={1}'.format(__url__, category)
+        url = '{0}?action=listing&category={1}'.format(_url, category)
         # is_folder = True means that this item opens a sub-list of lower level items.
         is_folder = True
         # Add our item to the listing as a 3-element tuple.
@@ -113,11 +113,11 @@ def list_categories():
     # Add our listing to Kodi.
     # Large lists and/or slower systems benefit from adding all items at once via addDirectoryItems
     # instead of adding one by ove via addDirectoryItem.
-    xbmcplugin.addDirectoryItems(__handle__, listing, len(listing))
+    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
     # Add a sort method for the virtual folder items (alphabetically, ignore articles)
-    xbmcplugin.addSortMethod(__handle__, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
+    xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
     # Finish creating a virtual folder.
-    xbmcplugin.endOfDirectory(__handle__)
+    xbmcplugin.endOfDirectory(_handle)
 
 
 def list_videos(category):
@@ -139,12 +139,15 @@ def list_videos(category):
         list_item.setProperty('fanart_image', video['thumb'])
         # Set additional info for the list item.
         list_item.setInfo('video', {'title': video['name'], 'genre': video['genre']})
+        # Set additional graphics (banner, poster, landscape etc.) for the list item.
+        # Again, here we use the same image as the thumbnail for simplicity's sake.
+        list_item.setArt({'landscape': video['thumb']})
         # Set 'IsPlayable' property to 'true'.
         # This is mandatory for playable items!
         list_item.setProperty('IsPlayable', 'true')
         # Create a URL for the plugin recursive callback.
         # Example: plugin://plugin.video.example/?action=play&video=http://www.vidsplay.com/vids/crab.mp4
-        url = '{0}?action=play&video={1}'.format(__url__, video['video'])
+        url = '{0}?action=play&video={1}'.format(_url, video['video'])
         # Add the list item to a virtual Kodi folder.
         # is_folder = False means that this item won't open any sub-list.
         is_folder = False
@@ -153,11 +156,11 @@ def list_videos(category):
     # Add our listing to Kodi.
     # Large lists and/or slower systems benefit from adding all items at once via addDirectoryItems
     # instead of adding one by ove via addDirectoryItem.
-    xbmcplugin.addDirectoryItems(__handle__, listing, len(listing))
+    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
     # Add a sort method for the virtual folder items (alphabetically, ignore articles)
-    xbmcplugin.addSortMethod(__handle__, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
+    xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
     # Finish creating a virtual folder.
-    xbmcplugin.endOfDirectory(__handle__)
+    xbmcplugin.endOfDirectory(_handle)
 
 
 def play_video(path):
@@ -169,7 +172,7 @@ def play_video(path):
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=path)
     # Pass the item to the Kodi player.
-    xbmcplugin.setResolvedUrl(__handle__, True, listitem=play_item)
+    xbmcplugin.setResolvedUrl(_handle, True, listitem=play_item)
 
 
 def router(paramstring):
@@ -181,7 +184,7 @@ def router(paramstring):
     """
     # Parse a URL-encoded paramstring to the dictionary of
     # {<parameter>: <value>} elements
-    params = dict(parse_qsl(paramstring[1:]))
+    params = dict(parse_qsl(paramstring))
     # Check the parameters passed to the plugin
     if params:
         if params['action'] == 'listing':
@@ -198,4 +201,5 @@ def router(paramstring):
 
 if __name__ == '__main__':
     # Call the router function and pass the plugin call parameters to it.
-    router(sys.argv[2])
+    # We use string slicing to trim the leading '?' from the plugin call paramstring
+    router(sys.argv[2][1:])
