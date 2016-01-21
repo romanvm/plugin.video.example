@@ -65,6 +65,7 @@ def get_categories():
     Here you can insert some parsing code that retrieves
     the list of video categories (e.g. 'Movies', 'TV-shows', 'Documentaries' etc.)
     from some site or server.
+
     :return: list
     """
     return VIDEOS.keys()
@@ -75,6 +76,7 @@ def get_videos(category):
     Get the list of videofiles/streams.
     Here you can insert some parsing code that retrieves
     the list of videostreams in a given category from some site or server.
+
     :param category: str
     :return: list
     """
@@ -84,7 +86,6 @@ def get_videos(category):
 def list_categories():
     """
     Create the list of video categories in the Kodi interface.
-    :return: None
     """
     # Get video categories
     categories = get_categories()
@@ -94,9 +95,12 @@ def list_categories():
     for category in categories:
         # Create a list item with a text label and a thumbnail image.
         list_item = xbmcgui.ListItem(label=category, thumbnailImage=VIDEOS[category][0]['thumb'])
-        # Set a fanart image for the list item.
-        # Here we use the same image as the thumbnail for simplicity's sake.
-        list_item.setProperty('fanart_image', VIDEOS[category][0]['thumb'])
+        # Set graphics (thumbnail, fanart, banner, poster, landscape etc.) for the list item.
+        # Here we use the same image for all items for simplicity's sake.
+        # In a real-life plugin you need to set each image accordingly.
+        list_item.setArt({'thumb': VIDEOS[category][0]['thumb'],
+                          'icon': VIDEOS[category][0]['thumb'],
+                          'fanart': VIDEOS[category][0]['thumb']})
         # Set additional info for the list item.
         # Here we use a category name for both properties for for simplicity's sake.
         # setInfo allows to set various information for an item.
@@ -123,8 +127,8 @@ def list_categories():
 def list_videos(category):
     """
     Create the list of playable videos in the Kodi interface.
+
     :param category: str
-    :return: None
     """
     # Get the list of videos in the category.
     videos = get_videos(category)
@@ -133,15 +137,13 @@ def list_videos(category):
     # Iterate through videos.
     for video in videos:
         # Create a list item with a text label and a thumbnail image.
-        list_item = xbmcgui.ListItem(label=video['name'], thumbnailImage=video['thumb'])
-        # Set a fanart image for the list item.
-        # Here we use the same image as the thumbnail for simplicity's sake.
-        list_item.setProperty('fanart_image', video['thumb'])
+        list_item = xbmcgui.ListItem(label=video['name'])
         # Set additional info for the list item.
         list_item.setInfo('video', {'title': video['name'], 'genre': video['genre']})
-        # Set additional graphics (banner, poster, landscape etc.) for the list item.
-        # Again, here we use the same image as the thumbnail for simplicity's sake.
-        list_item.setArt({'landscape': video['thumb']})
+        # Set graphics (thumbnail, fanart, banner, poster, landscape etc.) for the list item.
+        # Here we use the same image for all items for simplicity's sake.
+        # In a real-life plugin you need to set each image accordingly.
+        list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
         # Set 'IsPlayable' property to 'true'.
         # This is mandatory for playable items!
         list_item.setProperty('IsPlayable', 'true')
@@ -166,8 +168,8 @@ def list_videos(category):
 def play_video(path):
     """
     Play a video by the provided path.
+
     :param path: str
-    :return: None
     """
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=path)
@@ -179,8 +181,8 @@ def router(paramstring):
     """
     Router function that calls other functions
     depending on the provided paramstring
+
     :param paramstring:
-    :return:
     """
     # Parse a URL-encoded paramstring to the dictionary of
     # {<parameter>: <value>} elements
