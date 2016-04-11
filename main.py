@@ -94,7 +94,7 @@ def list_categories():
     # Iterate through categories
     for category in categories:
         # Create a list item with a text label and a thumbnail image.
-        list_item = xbmcgui.ListItem(label=category, thumbnailImage=VIDEOS[category][0]['thumb'])
+        list_item = xbmcgui.ListItem(label=category)
         # Set graphics (thumbnail, fanart, banner, poster, landscape etc.) for the list item.
         # Here we use the same image for all items for simplicity's sake.
         # In a real-life plugin you need to set each image accordingly.
