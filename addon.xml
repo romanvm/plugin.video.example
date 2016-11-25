@@ -13,5 +13,13 @@ provider-name="Roman_V_M">
   <summary lang="en">Example Kodi Video Plugin</summary>
   <description lang="en">An example video plugin for Kodi mediacenter.</description>
   <disclaimer lang="en">Free sample videos are provided by www.vidsplay.com.</disclaimer>
+  <assets>
+    <icon>icon.png</icon>
+    <fanart>fanart.jpg</fanart>
+    <screenshot>resources\screenshot-01.jpg</screenshot>
+    <screenshot>resources\screenshot-02.jpg</screenshot>
+    <screenshot>resources\screenshot-03.jpg</screenshot>    
+  </assets>
+  <news>Updated with latest artwork metadata</news>
 </extension>
 </addon>
