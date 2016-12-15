@@ -66,7 +66,8 @@ def get_categories():
     the list of video categories (e.g. 'Movies', 'TV-shows', 'Documentaries' etc.)
     from some site or server.
 
-    :return: list
+    :return: The list of video categories
+    :rtype: list
     """
     return VIDEOS.keys()
 
@@ -77,8 +78,10 @@ def get_videos(category):
     Here you can insert some parsing code that retrieves
     the list of videostreams in a given category from some site or server.
 
-    :param category: str
-    :return: list
+    :param category: Category name
+    :type category: str
+    :return: the list of videos in the category
+    :rtype: list
     """
     return VIDEOS[category]
 
@@ -128,7 +131,8 @@ def list_videos(category):
     """
     Create the list of playable videos in the Kodi interface.
 
-    :param category: str
+    :param category: Category name
+    :type category: str
     """
     # Get the list of videos in the category.
     videos = get_videos(category)
@@ -169,7 +173,8 @@ def play_video(path):
     """
     Play a video by the provided path.
 
-    :param path: str
+    :param path: Fully-qualified video URL
+    :type path: str
     """
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=path)
@@ -182,7 +187,8 @@ def router(paramstring):
     Router function that calls other functions
     depending on the provided paramstring
 
-    :param paramstring:
+    :param paramstring: URL encoded plugin paramstring
+    :type paramstring: str
     """
     # Parse a URL-encoded paramstring to the dictionary of
     # {<parameter>: <value>} elements
