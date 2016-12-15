@@ -105,8 +105,6 @@ def list_categories():
     """
     # Get video categories
     categories = get_categories()
-    # Create a list for our items.
-    listing = []
     # Iterate through categories
     for category in categories:
         # Create a list item with a text label and a thumbnail image.
@@ -128,12 +126,8 @@ def list_categories():
         url = get_url(action='listing', category=category)
         # is_folder = True means that this item opens a sub-list of lower level items.
         is_folder = True
-        # Add our item to the listing as a 3-element tuple.
-        listing.append((url, list_item, is_folder))
-    # Add our listing to Kodi.
-    # Large lists and/or slower systems benefit from adding all items at once via addDirectoryItems
-    # instead of adding one by ove via addDirectoryItem.
-    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
+        # Add our item to the Kodi virtual folder listing.
+        xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
     # Add a sort method for the virtual folder items (alphabetically, ignore articles)
     xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
     # Finish creating a virtual folder.
@@ -149,8 +143,6 @@ def list_videos(category):
     """
     # Get the list of videos in the category.
     videos = get_videos(category)
-    # Create a list for our items.
-    listing = []
     # Iterate through videos.
     for video in videos:
         # Create a list item with a text label and a thumbnail image.
@@ -170,12 +162,8 @@ def list_videos(category):
         # Add the list item to a virtual Kodi folder.
         # is_folder = False means that this item won't open any sub-list.
         is_folder = False
-        # Add our item to the listing as a 3-element tuple.
-        listing.append((url, list_item, is_folder))
-    # Add our listing to Kodi.
-    # Large lists and/or slower systems benefit from adding all items at once via addDirectoryItems
-    # instead of adding one by ove via addDirectoryItem.
-    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
+        # Add our item to the Kodi virtual folder listing.
+        xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
     # Add a sort method for the virtual folder items (alphabetically, ignore articles)
     xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
     # Finish creating a virtual folder.
