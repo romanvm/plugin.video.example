@@ -5,6 +5,7 @@
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
 
 import sys
+from urllib import urlencode
 from urlparse import parse_qsl
 import xbmcgui
 import xbmcplugin
@@ -76,7 +77,7 @@ def get_videos(category):
     """
     Get the list of videofiles/streams.
     Here you can insert some parsing code that retrieves
-    the list of videostreams in a given category from some site or server.
+    the list of video streams in the given category from some site or server.
 
     :param category: Category name
     :type category: str
@@ -110,9 +111,10 @@ def list_categories():
         # For available properties see the following link:
         # http://mirrors.xbmc.org/docs/python-docs/15.x-isengard/xbmcgui.html#ListItem-setInfo
         list_item.setInfo('video', {'title': category, 'genre': category})
-        # Create a URL for the plugin recursive callback.
+        # Create a URL for a plugin recursive call.
+        # We use urlencode helper function to create a correctly formatted paramstring.
         # Example: plugin://plugin.video.example/?action=listing&category=Animals
-        url = '{0}?action=listing&category={1}'.format(_url, category)
+        url = '{0}?{1}'.format(_url, urlencode({'category': category}))
         # is_folder = True means that this item opens a sub-list of lower level items.
         is_folder = True
         # Add our item to the listing as a 3-element tuple.
@@ -151,9 +153,10 @@ def list_videos(category):
         # Set 'IsPlayable' property to 'true'.
         # This is mandatory for playable items!
         list_item.setProperty('IsPlayable', 'true')
-        # Create a URL for the plugin recursive callback.
+        # Create a URL for a plugin recursive call.
+        # We use urlencode helper function to create a correctly formatted paramstring.
         # Example: plugin://plugin.video.example/?action=play&video=http://www.vidsplay.com/vids/crab.mp4
-        url = '{0}?action=play&video={1}'.format(_url, video['video'])
+        url = '{0}?{1}'.format(_url, urlencode({'action': 'play', 'video': video['video']}))
         # Add the list item to a virtual Kodi folder.
         # is_folder = False means that this item won't open any sub-list.
         is_folder = False
@@ -201,6 +204,11 @@ def router(paramstring):
         elif params['action'] == 'play':
             # Play a video from a provided URL.
             play_video(params['video'])
+        else:
+            # If the provided paramstring does not contain a supported action
+            # we raise an exception. This helps to catch coding errors,
+            # e.g. typos in action names.
+            raise ValueError('Invalid paramstring: {0}!'.format(paramstring))
     else:
         # If the plugin is called from Kodi UI without any parameters,
         # display the list of video categories
