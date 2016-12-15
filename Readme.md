@@ -5,7 +5,7 @@ Please read the comments in the plugin code for more details.
 An installable .zip can be downloaded from "[Releases](https://github.com/romanvm/plugin.video.example/releases)" tab.
 
 **Note**: the purpose of this example plugin is to show you how to organize and play your media content in Kodi.
-The methods of obtaining such content, for example parsing websites or working with JSON-RPC APIs,
+The methods of obtaining such content, for example parsing websites or working with various APIs,
 are beyond the scope of this example.
 
 The plugin uses a pre-defined set of free sample videos from [www.vidsplay.com](http://www.vidsplay.com/).
