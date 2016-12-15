@@ -60,6 +60,18 @@ VIDEOS = {'Animals': [{'name': 'Crab',
                      ]}
 
 
+def get_url(**kwargs):
+    """
+    Create a URL for calling the plugin recursively from the given set of keyword arguments.
+
+    :param kwargs: "argument=value" pairs
+    :type kwargs: dict
+    :return: plugin call URL
+    :rtype: str
+    """
+    return '{0}?{1}'.format(_url, urlencode(kwargs))
+
+
 def get_categories():
     """
     Get the list of video categories.
@@ -112,9 +124,8 @@ def list_categories():
         # http://mirrors.xbmc.org/docs/python-docs/15.x-isengard/xbmcgui.html#ListItem-setInfo
         list_item.setInfo('video', {'title': category, 'genre': category})
         # Create a URL for a plugin recursive call.
-        # We use urlencode helper function to create a correctly formatted paramstring.
         # Example: plugin://plugin.video.example/?action=listing&category=Animals
-        url = '{0}?{1}'.format(_url, urlencode({'category': category}))
+        url = get_url(action='listing', category=category)
         # is_folder = True means that this item opens a sub-list of lower level items.
         is_folder = True
         # Add our item to the listing as a 3-element tuple.
@@ -154,9 +165,8 @@ def list_videos(category):
         # This is mandatory for playable items!
         list_item.setProperty('IsPlayable', 'true')
         # Create a URL for a plugin recursive call.
-        # We use urlencode helper function to create a correctly formatted paramstring.
         # Example: plugin://plugin.video.example/?action=play&video=http://www.vidsplay.com/vids/crab.mp4
-        url = '{0}?{1}'.format(_url, urlencode({'action': 'play', 'video': video['video']}))
+        url = get_url(action='play', video=video['video'])
         # Add the list item to a virtual Kodi folder.
         # is_folder = False means that this item won't open any sub-list.
         is_folder = False
