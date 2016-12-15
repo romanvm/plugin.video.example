@@ -75,21 +75,29 @@ def get_url(**kwargs):
 def get_categories():
     """
     Get the list of video categories.
+
     Here you can insert some parsing code that retrieves
     the list of video categories (e.g. 'Movies', 'TV-shows', 'Documentaries' etc.)
     from some site or server.
 
+    .. note:: Consider using `generator functions <https://wiki.python.org/moin/Generators>`_
+        instead of returning lists.
+
     :return: The list of video categories
     :rtype: list
     """
-    return VIDEOS.keys()
+    return VIDEOS.iterkeys()
 
 
 def get_videos(category):
     """
     Get the list of videofiles/streams.
+
     Here you can insert some parsing code that retrieves
     the list of video streams in the given category from some site or server.
+
+    .. note:: Consider using `generators functions <https://wiki.python.org/moin/Generators>`_
+        instead of returning lists.
 
     :param category: Category name
     :type category: str
