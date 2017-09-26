@@ -86,7 +86,7 @@ def get_categories():
     :return: The list of video categories
     :rtype: list
     """
-    return VIDEOS.iterkeys()
+    return VIDEOS.keys()
 
 
 def get_videos(category):
