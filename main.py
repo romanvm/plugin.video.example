@@ -111,6 +111,12 @@ def list_categories():
     """
     Create the list of video categories in the Kodi interface.
     """
+    # Set plugin category. It is displayed in some skins as the name
+    # of the current section.
+    xbmcplugin.setPluginCategory(_handle, 'My Video Collection')
+    # Set plugin content. It allows Kodi to select appropriate views
+    # for this type of content.
+    xbmcplugin.setContent(_handle, 'videos')
     # Get video categories
     categories = get_categories()
     # Iterate through categories
@@ -149,6 +155,12 @@ def list_videos(category):
     :param category: Category name
     :type category: str
     """
+    # Set plugin category. It is displayed in some skins as the name
+    # of the current section.
+    xbmcplugin.setPluginCategory(_handle, category)
+    # Set plugin content. It allows Kodi to select appropriate views
+    # for this type of content.
+    xbmcplugin.setContent(_handle, 'videos')
     # Get the list of videos in the category.
     videos = get_videos(category)
     # Iterate through videos.
