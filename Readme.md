@@ -11,6 +11,6 @@ are beyond the scope of this example.
 
 The plugin uses a pre-defined set of free sample videos from [www.vidsplay.com](http://www.vidsplay.com/).
 
-**Warning**: the "master" branch is only compatible with Kody 16.0 (Jarvis) and above. For older versions see the "legacy" branch.
+**Warning**: the "master" branch is only compatible with Kody 17.0 (Krypton) and above. For older versions see the "legacy" branch.
 
 License: [GPL v.3](http://www.gnu.org/copyleft/gpl.html)
