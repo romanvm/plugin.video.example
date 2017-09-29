@@ -134,7 +134,10 @@ def list_categories():
         # setInfo allows to set various information for an item.
         # For available properties see the following link:
         # http://mirrors.xbmc.org/docs/python-docs/15.x-isengard/xbmcgui.html#ListItem-setInfo
-        list_item.setInfo('video', {'title': category, 'genre': category})
+        # 'mediatype' is needed for a skin to display info for this ListItem correctly.
+        list_item.setInfo('video', {'title': category,
+                                    'genre': category,
+                                    'mediatype': 'video'})
         # Create a URL for a plugin recursive call.
         # Example: plugin://plugin.video.example/?action=listing&category=Animals
         url = get_url(action='listing', category=category)
@@ -168,7 +171,10 @@ def list_videos(category):
         # Create a list item with a text label and a thumbnail image.
         list_item = xbmcgui.ListItem(label=video['name'])
         # Set additional info for the list item.
-        list_item.setInfo('video', {'title': video['name'], 'genre': video['genre']})
+        # 'mediatype' is needed for skin to display info for this ListItem correctly.
+        list_item.setInfo('video', {'title': video['name'],
+                                    'genre': video['genre'],
+                                    'mediatype': 'video'})
         # Set graphics (thumbnail, fanart, banner, poster, landscape etc.) for the list item.
         # Here we use the same image for all items for simplicity's sake.
         # In a real-life plugin you need to set each image accordingly.
