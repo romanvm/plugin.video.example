@@ -133,7 +133,7 @@ def list_categories():
         # Here we use a category name for both properties for for simplicity's sake.
         # setInfo allows to set various information for an item.
         # For available properties see the following link:
-        # http://mirrors.xbmc.org/docs/python-docs/15.x-isengard/xbmcgui.html#ListItem-setInfo
+        # https://codedocs.xyz/xbmc/xbmc/group__python__xbmcgui__listitem.html#ga0b71166869bda87ad744942888fb5f14
         # 'mediatype' is needed for a skin to display info for this ListItem correctly.
         list_item.setInfo('video', {'title': category,
                                     'genre': category,
