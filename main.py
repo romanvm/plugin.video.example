@@ -84,9 +84,9 @@ def get_categories():
         instead of returning lists.
 
     :return: The list of video categories
-    :rtype: list
+    :rtype: types.GeneratorType
     """
-    return VIDEOS.keys()
+    return VIDEOS.iterkeys()
 
 
 def get_videos(category):
