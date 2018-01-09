@@ -5,6 +5,7 @@ name="Example Kodi Video Plugin"
 provider-name="Roman_V_M">
 <requires>
   <import addon="xbmc.python" version="2.25.0"/>
+  <import addon="script.module.future" />
 </requires>
 <extension point="xbmc.python.pluginsource" library="main.py">
   <provides>video</provides>
