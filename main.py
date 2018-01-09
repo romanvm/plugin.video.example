@@ -14,6 +14,7 @@ from __future__ import unicode_literals
 # Monkey-patch standard libary names to enable Python 3-like behavior
 from future import standard_library
 standard_library.install_aliases()
+from future.utils import iterkeys
 # The above strings provide compatibility layer for Python 2
 # so the code can work in both versions.
 # In Python 3 they do nothing and can be safely removed.
@@ -98,7 +99,7 @@ def get_categories():
     :return: The list of video categories
     :rtype: types.GeneratorType
     """
-    return VIDEOS.keys()
+    return iterkeys(VIDEOS)
 
 
 def get_videos(category):
