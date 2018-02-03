@@ -7,8 +7,10 @@
 import sys
 from urllib import urlencode
 from urlparse import parse_qsl
+import requests
 import xbmcgui
 import xbmcplugin
+import json
 
 # Get the plugin url in plugin:// notation.
 _url = sys.argv[0]
@@ -113,7 +115,23 @@ def get_videos(category):
     :return: the list of videos in the category
     :rtype: list
     """
-    return VIDEOS[category]
+
+    videos = []
+    testURL = "https://api.asksteem.com/search?q=meta.video.info.author:mstafford"
+    # testURL = "https://steemit.com/dtube/@mstafford/9le70677.json"
+    data = json.loads(requests.get(testURL).text)
+    for results in data['results']:
+        permlink = (json.dumps(results['permlink'])).replace('"', '')
+        asdfasdf = "https://steemit.com/dtube/@mstafford/" + permlink + ".json"
+        data = json.loads(requests.get(asdfasdf).text)
+        dtubeitem = {'name' : data['post']['json_metadata']['video']['info']['title'],
+                'thumb' : "https://ipfs.io/ipfs/" + data['post']['json_metadata']['video']['info']['snaphash'],
+                'video': "https://ipfs.io/ipfs/" + data['post']['json_metadata']['video']['content']['video480hash'],
+                'genre' : 'dtube'}
+        videos.append(dtubeitem)ifps
+
+    return videos
+    #return VIDEOS[category]
 
 
 def list_categories():
