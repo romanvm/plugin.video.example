@@ -7,8 +7,10 @@
 import sys
 from urllib import urlencode
 from urlparse import parse_qsl
+import requests
 import xbmcgui
 import xbmcplugin
+import json
 
 # Get the plugin url in plugin:// notation.
 _url = sys.argv[0]
@@ -32,32 +34,41 @@ VIDEOS = {'Animals': [{'name': 'Crab',
                        'video': 'http://www.vidsplay.com/wp-content/uploads/2017/04/turtle.mp4',
                        'genre': 'Animals'}
                       ],
-            'Cars': [{'name': 'Postal Truck',
-                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/us_postal-screenshot.jpg',
-                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/us_postal.mp4',
-                      'genre': 'Cars'},
-                     {'name': 'Traffic',
-                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic1-screenshot.jpg',
-                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic1.mp4',
-                      'genre': 'Cars'},
-                     {'name': 'Traffic Arrows',
-                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic_arrows-screenshot.jpg',
-                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic_arrows.mp4',
-                      'genre': 'Cars'}
-                     ],
-            'Food': [{'name': 'Chicken',
-                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbq_chicken-screenshot.jpg',
-                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbqchicken.mp4',
-                      'genre': 'Food'},
-                     {'name': 'Hamburger',
-                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/hamburger-screenshot.jpg',
-                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/hamburger.mp4',
-                      'genre': 'Food'},
-                     {'name': 'Pizza',
-                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza-screenshot.jpg',
-                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza.mp4',
-                      'genre': 'Food'}
-                     ]}
+          'Cars': [{'name': 'Postal Truck',
+                    'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/us_postal-screenshot.jpg',
+                    'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/us_postal.mp4',
+                    'genre': 'Cars'},
+                   {'name': 'Traffic',
+                    'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic1-screenshot.jpg',
+                    'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic1.mp4',
+                    'genre': 'Cars'},
+                   {'name': 'Traffic Arrows',
+                    'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic_arrows-screenshot.jpg',
+                    'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic_arrows.mp4',
+                    'genre': 'Cars'}
+                   ],
+          'Food': [{'name': 'Chicken',
+                    'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbq_chicken-screenshot.jpg',
+                    'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbqchicken.mp4',
+                    'genre': 'Food'},
+                   {'name': 'Hamburger',
+                    'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/hamburger-screenshot.jpg',
+                    'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/hamburger.mp4',
+                    'genre': 'Food'},
+                   {'name': 'Pizza',
+                    'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza-screenshot.jpg',
+                    'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza.mp4',
+                    'genre': 'Food'}
+                   ],
+          'dtube': [{'name': 'dtube',
+                     'thumb': 'https://i.ytimg.com/vi/0pNMRvGnamU/hqdefault.jpg',
+                     'video': 'https://ipfs.io/ipfs/QmcKh9jCRj8NXubdUQETXwjjJi72Jev5Rwv9xqHgLpt2v8',
+                     'genre': 'dtube'},
+                    {'name': 'dtube-480',
+                     'thumb': 'https://ipfs.io/ipfs/QmQ29MAunHpRRbijtBb2znRSnjUJtEXPK6m4RSW93jjAte',
+                     'video': 'https://ipfs.io/ipfs/QmU48ty5GdMEZoq8tJXQGBcHuMUTav3woh2tRrQQhJ41x9',
+                     'genre': 'dtube'}
+                    ]}
 
 
 def get_url(**kwargs):
@@ -104,7 +115,23 @@ def get_videos(category):
     :return: the list of videos in the category
     :rtype: list
     """
-    return VIDEOS[category]
+
+    videos = []
+    testURL = "https://api.asksteem.com/search?q=meta.video.info.author:mstafford"
+    # testURL = "https://steemit.com/dtube/@mstafford/9le70677.json"
+    data = json.loads(requests.get(testURL).text)
+    for results in data['results']:
+        permlink = (json.dumps(results['permlink'])).replace('"', '')
+        asdfasdf = "https://steemit.com/dtube/@mstafford/" + permlink + ".json"
+        data = json.loads(requests.get(asdfasdf).text)
+        dtubeitem = {'name' : data['post']['json_metadata']['video']['info']['title'],
+                'thumb' : "https://ipfs.io/ipfs/" + data['post']['json_metadata']['video']['info']['snaphash'],
+                'video': "https://ipfs.io/ipfs/" + data['post']['json_metadata']['video']['content']['video480hash'],
+                'genre' : 'dtube'}
+        videos.append(dtubeitem)ifps
+
+    return videos
+    #return VIDEOS[category]
 
 
 def list_categories():
