@@ -11,7 +11,7 @@ are beyond the scope of this example.
 
 The plugin uses a pre-defined set of free sample videos from [www.vidsplay.com](http://www.vidsplay.com/).
 
-Python 3 compatible example plugin for Kodi 19.x "Matrix" and above can be found in `matrix` branch.
+Python 3 compatible example plugin for Kodi 19.x "Matrix" and above can be found in `python3` branch.
 
 **Warning**: the "master" branch is only compatible with Kody 17.0 (Krypton) and above. For older versions see the "legacy" branch.
 
