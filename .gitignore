@@ -9,7 +9,9 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.env
 env/
+.venv/
 venv/
 venv2/
 build/
