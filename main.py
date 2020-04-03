@@ -1,24 +1,10 @@
-# -*- coding: utf-8 -*-
-# Module: default
+# Module: main
 # Author: Roman V. M.
 # Created on: 28.11.2014
 # License: GPL v.3 https://www.gnu.org/copyleft/gpl.html
 """
-Example video plugin that is compatible with both Python 2 and 3
-
-Compatibility features are provided by ``script.module.future`` library addon.
+Example video plugin that is compatible with Kodi 19.x "Matrix" and above
 """
-
-# Enable unicode strings by default as in Python 3
-from __future__ import unicode_literals
-# Monkey-patch standard libary names to enable Python 3-like behavior
-from future import standard_library
-standard_library.install_aliases()
-from future.utils import iterkeys
-# The above strings provide compatibility layer for Python 2
-# so the code can work in both versions.
-# In Python 3 they do nothing and can be safely removed.
-# Normal imports for your addon:
 import sys
 from urllib.parse import urlencode, parse_qsl
 import xbmcgui
@@ -99,7 +85,7 @@ def get_categories():
     :return: The list of video categories
     :rtype: types.GeneratorType
     """
-    return iterkeys(VIDEOS)
+    return VIDEOS.keys()
 
 
 def get_videos(category):
