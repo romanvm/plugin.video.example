@@ -78,7 +78,7 @@ def get_categories():
 
     Here you can insert some parsing code that retrieves
     the list of video categories (e.g. 'Movies', 'TV-shows', 'Documentaries' etc.)
-    from some site or server.
+    from some site or API.
 
     .. note:: Consider using `generator functions <https://wiki.python.org/moin/Generators>`_
         instead of returning lists.
@@ -94,7 +94,7 @@ def get_videos(category):
     Get the list of videofiles/streams.
 
     Here you can insert some parsing code that retrieves
-    the list of video streams in the given category from some site or server.
+    the list of video streams in the given category from some site or API.
 
     .. note:: Consider using `generators functions <https://wiki.python.org/moin/Generators>`_
         instead of returning lists.
