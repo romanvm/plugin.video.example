@@ -11,9 +11,9 @@ import xbmcgui
 import xbmcplugin
 
 # Get the plugin url in plugin:// notation.
-_url = sys.argv[0]
+_URL = sys.argv[0]
 # Get the plugin handle as an integer number.
-_handle = int(sys.argv[1])
+_HANDLE = int(sys.argv[1])
 
 # Free sample videos are provided by www.vidsplay.com
 # Here we use a fixed set of properties simply for demonstrating purposes
@@ -68,7 +68,7 @@ def get_url(**kwargs):
     :return: plugin call URL
     :rtype: str
     """
-    return '{0}?{1}'.format(_url, urlencode(kwargs))
+    return '{}?{}'.format(_URL, urlencode(kwargs))
 
 
 def get_categories():
@@ -112,10 +112,10 @@ def list_categories():
     """
     # Set plugin category. It is displayed in some skins as the name
     # of the current section.
-    xbmcplugin.setPluginCategory(_handle, 'My Video Collection')
+    xbmcplugin.setPluginCategory(_HANDLE, 'My Video Collection')
     # Set plugin content. It allows Kodi to select appropriate views
     # for this type of content.
-    xbmcplugin.setContent(_handle, 'videos')
+    xbmcplugin.setContent(_HANDLE, 'videos')
     # Get video categories
     categories = get_categories()
     # Iterate through categories
@@ -143,11 +143,11 @@ def list_categories():
         # is_folder = True means that this item opens a sub-list of lower level items.
         is_folder = True
         # Add our item to the Kodi virtual folder listing.
-        xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+        xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)
     # Add a sort method for the virtual folder items (alphabetically, ignore articles)
-    xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
+    xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
     # Finish creating a virtual folder.
-    xbmcplugin.endOfDirectory(_handle)
+    xbmcplugin.endOfDirectory(_HANDLE)
 
 
 def list_videos(category):
@@ -159,10 +159,10 @@ def list_videos(category):
     """
     # Set plugin category. It is displayed in some skins as the name
     # of the current section.
-    xbmcplugin.setPluginCategory(_handle, category)
+    xbmcplugin.setPluginCategory(_HANDLE, category)
     # Set plugin content. It allows Kodi to select appropriate views
     # for this type of content.
-    xbmcplugin.setContent(_handle, 'videos')
+    xbmcplugin.setContent(_HANDLE, 'videos')
     # Get the list of videos in the category.
     videos = get_videos(category)
     # Iterate through videos.
@@ -188,11 +188,11 @@ def list_videos(category):
         # is_folder = False means that this item won't open any sub-list.
         is_folder = False
         # Add our item to the Kodi virtual folder listing.
-        xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+        xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)
     # Add a sort method for the virtual folder items (alphabetically, ignore articles)
-    xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
+    xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
     # Finish creating a virtual folder.
-    xbmcplugin.endOfDirectory(_handle)
+    xbmcplugin.endOfDirectory(_HANDLE)
 
 
 def play_video(path):
@@ -205,7 +205,7 @@ def play_video(path):
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=path)
     # Pass the item to the Kodi player.
-    xbmcplugin.setResolvedUrl(_handle, True, listitem=play_item)
+    xbmcplugin.setResolvedUrl(_HANDLE, True, listitem=play_item)
 
 
 def router(paramstring):
@@ -231,7 +231,7 @@ def router(paramstring):
             # If the provided paramstring does not contain a supported action
             # we raise an exception. This helps to catch coding errors,
             # e.g. typos in action names.
-            raise ValueError('Invalid paramstring: {0}!'.format(paramstring))
+            raise ValueError('Invalid paramstring: {}!'.format(paramstring))
     else:
         # If the plugin is called from Kodi UI without any parameters,
         # display the list of video categories
