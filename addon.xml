@@ -12,7 +12,8 @@ provider-name="Roman_V_M">
 <extension point="xbmc.addon.metadata">
   <summary lang="en_GB">Example Kodi Video Plugin</summary>
   <description lang="en_GB">An example video plugin for Kodi mediacenter.</description>
-  <disclaimer lang="en_GB">Free sample videos are provided by www.vidsplay.com.</disclaimer>
+  <disclaimer lang="en_GB">Public domain movies are provided by publicdomainmovie.net.</disclaimer>
+  <license>GPL-3.0-only	</license>
   <assets>
     <icon>resources/images/icon.png</icon>
     <fanart>resources/images/fanart.jpg</fanart>

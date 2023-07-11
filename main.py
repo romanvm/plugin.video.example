@@ -15,8 +15,8 @@
 """
 Example video plugin that is compatible with Kodi 20.x "Nexus" and above
 """
+import os
 import sys
-from pathlib import Path
 from urllib.parse import urlencode, parse_qsl
 
 import xbmcgui
@@ -29,9 +29,9 @@ URL = sys.argv[0]
 # Get a plugin handle as an integer number.
 HANDLE = int(sys.argv[1])
 # Get addon base path
-ADDON_PATH = Path(translatePath(Addon().getAddonInfo('path')))
-ICONS_DIR = ADDON_PATH / 'resources' / 'images' / 'icons'
-FANART_DIR = ADDON_PATH / 'resources' / 'images' / 'fanart'
+ADDON_PATH = translatePath(Addon().getAddonInfo('path'))
+ICONS_DIR = os.path.join(ADDON_PATH, 'resources', 'images', 'icons')
+FANART_DIR = os.path.join(ADDON_PATH, 'resources', 'images', 'fanart')
 
 # Public domain movies are from https://publicdomainmovie.net
 # Here we use a hardcoded list of movies simply for demonstrating purposes
@@ -40,8 +40,8 @@ FANART_DIR = ADDON_PATH / 'resources' / 'images' / 'fanart'
 VIDEOS = [
     {
         'genre': 'Drama',
-        'icon': str(ICONS_DIR / 'Drama.png'),
-        'fanart': str(FANART_DIR / 'Drama.jpg'),
+        'icon': os.path.join(ICONS_DIR, 'Drama.png'),
+        'fanart': os.path.join(FANART_DIR, 'Drama.jpg'),
         'movies': [
             {
                 'title': 'The Stranger',
@@ -76,8 +76,8 @@ VIDEOS = [
     },
     {
         'genre': 'Horror',
-        'icon': str(ICONS_DIR / 'Horror.png'),
-        'fanart': str(FANART_DIR / 'Horror.jpg'),
+        'icon': os.path.join(ICONS_DIR, 'Horror.png'),
+        'fanart': os.path.join(FANART_DIR, 'Horror.jpg'),
         'movies': [
             {
                 'title': 'House on Haunted Hill',
@@ -89,6 +89,65 @@ VIDEOS = [
                         'with the stipulation that they must stay the entire night in the house after '
                         'the doors are locked at midnight.',
                 'year': 1959,
+            },
+            {
+                'title': 'Carnival of Souls',
+                'url': 'https://ia600301.us.archive.org/8/items/CarnivalofSouls/CarnivalOfSouls_512kb.mp4',
+                'poster': 'https://publicdomainmovie.net/wikimedia.php?id=Carnival_of_Souls_%25281962_pressbook_cover%2529.jpg',
+                'plot': 'Carnival of Souls is a 1962 Independent film horror film starring Candace Hilligoss. Produced and directed by Herk Harvey '
+                        'for an estimated $33,000, the film did not gain widespread attention when originally released, '
+                        'as a B-movie; today, however, it is a cult classic.',
+                'year': 1962,
+            },
+            {
+                'title': 'The Screaming Skull',
+                'url': 'https://ia801603.us.archive.org/10/items/TheScreamingSkull/TheScreamingSkull.mp4',
+                'poster': 'https://publicdomainmovie.net/wikimedia.php?id=Poster_for_The_Screaming_Skull.jpg',
+                'plot': 'A widower remarries and the couple move into the house he shared with his previous wife. '
+                        'Only the ghost of the last wife might still be hanging around.',
+                'year': 1958,
+            },
+        ],
+    },
+    {
+        'genre': 'Comedy',
+        'icon': os.path.join(ICONS_DIR, 'Comedy.png'),
+        'fanart': os.path.join(FANART_DIR, 'Comedy.jpg'),
+        'movies': [
+            {
+                'title': '',
+                'url': '',
+                'poster': '',
+                'plot': '',
+                'year': 0,
+            },
+            {
+                'title': 'Charlie Chaplin\'s "The Vagabond"',
+                'url': 'https://ia904601.us.archive.org/16/items/CC_1916_07_10_TheVagabond/CC_1916_07_10_TheVagabond.mp4',
+                'poster': 'https://publicdomainmovie.net/wikimedia.php?id=The_Vagabond_%25281916%2529.jpg',
+                'plot': 'Charlie Chaplins 53rd Film Released July 10 1916 The Vagabond was a silent '
+                        'film by Charlie Chaplin and his third film with Mutual Films. Released in 1916, '
+                        'it co-starred Edna Purviance, Eric Campbell, Leo White and Lloyd Bacon. '
+                        'This film echoed Chaplin\'s work on The Tramp, with more drama mixed in with comedy.',
+                'year': 1916,
+            },
+            {
+                'title': 'Sing A Song of Six Pants',
+                'url': 'https://ia601508.us.archive.org/26/items/sing_a_song_of_six_pants/sing_a_song_of_six_pants_512kb.mp4',
+                'poster': 'https://publicdomainmovie.net/wikimedia.php?id=SingSong6PantsOneSheet47.JPG',
+                'plot': 'The Three Stooges (Moe, Larry, Shemp) are tailors and are heavily in debt. '
+                        'Could a big reward for the capture of a fugitive bank robber answer their financial prayers?',
+                'year': 1947,
+            },
+            {
+                'title': 'Steamboat Bill, Jr.',
+                'url': 'https://ia904501.us.archive.org/32/items/SteamboatBillJr/Steamboat_Bill.Jr_512kb.mp4',
+                'poster': 'https://publicdomainmovie.net/wikimedia.php?id=Steamboat_bill_poster.jpg',
+                'plot': 'Steamboat Bill, Jr. is the story of a naive, college-educated dandy who must prove himself '
+                        'to his working-class father, a hot-headed riverboat captain, while courting the daughter of '
+                        'his father\'s rival, who threatens to put Steamboat Bill, Sr. '
+                        'and his paddle-wheeler out of business.',
+                'year': 1928,
             },
         ],
     },
