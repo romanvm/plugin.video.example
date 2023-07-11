@@ -17,8 +17,8 @@ provider-name="Roman_V_M">
   <assets>
     <icon>resources/images/icon.png</icon>
     <fanart>resources/images/fanart.jpg</fanart>
-    <screenshot>resources/images/screenshot-01.jpg</screenshot>
-    <screenshot>resources/images/screenshot-02.jpg</screenshot>
+    <screenshot>resources/images/screenshot-1.jpg</screenshot>
+    <screenshot>resources/images/screenshot-2.jpg</screenshot>
   </assets>
   <news>Updated with latest artwork metadata</news>
 </extension>
