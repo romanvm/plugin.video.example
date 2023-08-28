@@ -240,7 +240,7 @@ def list_videos(genre_index):
     :param genre_index: the index of genre in the list of movie genres
     :type genre_index: int
     """
-    genre_info = VIDEOS[genre_index]
+    genre_info = get_videos(genre_index)
     # Set plugin category. It is displayed in some skins as the name
     # of the current section.
     xbmcplugin.setPluginCategory(HANDLE, genre_info['genre'])
