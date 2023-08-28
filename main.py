@@ -115,13 +115,6 @@ VIDEOS = [
         'fanart': os.path.join(FANART_DIR, 'Comedy.jpg'),
         'movies': [
             {
-                'title': '',
-                'url': '',
-                'poster': '',
-                'plot': '',
-                'year': 0,
-            },
-            {
                 'title': 'Charlie Chaplin\'s "The Vagabond"',
                 'url': 'https://ia904601.us.archive.org/16/items/CC_1916_07_10_TheVagabond/CC_1916_07_10_TheVagabond.mp4',
                 'poster': 'https://publicdomainmovie.net/wikimedia.php?id=The_Vagabond_%25281916%2529.jpg',
