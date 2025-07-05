@@ -11,6 +11,10 @@ are outside the scope of this example.
 
 The plugin uses a pre-defined set of public domain movies from  [publicdomainmovie.net](https://publicdomainmovie.net/).
 
+If you are working with this code in some IDE, like PyCharm or VS Code, I strongly recommend to install
+[Kodistubs](https://github.com/romanvm/Kodistubs) in your working Python virtual environment
+to get auto-completion and quick documentation for Kodi Python API classes and functions in your IDE.
+
 **Warning**: the "master" branch is only compatible with Kody 20.0 ("Nexus") and above that uses Python 3
 runtime for addons. For older versions see "matrix" and "python2" branches.
 
